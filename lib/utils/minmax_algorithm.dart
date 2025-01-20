@@ -27,7 +27,7 @@ class MinmaxAlgorithm {
       [2, 4, 6],
     ];
 
-    for (List<int> combination in winningCombinations) {
+    for (final List<int> combination in winningCombinations) {
       if (board[combination[0]] != '' &&
           board[combination[0]] == board[combination[1]] &&
           board[combination[0]] == board[combination[2]]) {

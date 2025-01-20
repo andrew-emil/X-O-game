@@ -1,6 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:x_o_game/constants/app_constants.dart';
+import '../constants/app_constants.dart';
 
 class GamePreview extends StatelessWidget {
   const GamePreview({
@@ -23,8 +22,10 @@ class GamePreview extends StatelessWidget {
       children: List.generate(
         9,
         (index) {
-          final move = gameMoves.sublist(0, gameIndex + 1).firstWhere(
-              (element) => element.substring(1) == index.toString(), orElse: () => '');
+          final move = gameMoves.take(gameIndex + 1).firstWhere(
+                (element) => element.substring(1) == index.toString(),
+                orElse: () => '',
+              );
           final symbol = move.isNotEmpty ? move[0] : '';
 
           return Container(

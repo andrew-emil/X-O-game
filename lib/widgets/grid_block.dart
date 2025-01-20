@@ -43,8 +43,7 @@ class GridBlock extends ConsumerWidget {
         padding: const EdgeInsets.all(8),
         children: List.generate(
           9,
-          (index) => InkWell(
-            borderRadius: BorderRadius.circular(12),
+          (index) => GestureDetector(
             onTap: game.gameOver
                 ? null
                 : () => _handleClick(
@@ -101,8 +100,8 @@ class GridBlock extends ConsumerWidget {
     }
   }
 
-  void _updateGameState(
-      GameState game, GameProvider ref, HistoryProvider notifier, int lastMoveIndex) {
+  void _updateGameState(GameState game, GameProvider ref,
+      HistoryProvider notifier, int lastMoveIndex) {
     // Increment the turn count
     ref.incrementTurns(game.turns);
 

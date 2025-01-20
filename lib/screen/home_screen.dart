@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:x_o_game/screen/history_screen.dart';
 
 import '../constants/app_constants.dart';
 import '../constants/theme_enum.dart';
@@ -9,6 +8,7 @@ import '../providers/switch_list_provider.dart';
 import '../providers/theme_provider.dart';
 import '../widgets/grid_block.dart';
 import '../widgets/last_block.dart';
+import 'history_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -18,13 +18,14 @@ class HomeScreen extends ConsumerWidget {
     final bool isSwitchOn = ref.watch(isSwitchedOnProvider);
     bool gameOver = ref.watch(gameProvider).gameOver;
     String activePlayer = ref.watch(gameProvider).activePlayer.toUpperCase();
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'XO game',
-          style: TextStyle(
+          style: textTheme.headlineLarge?.copyWith(
             fontFamily: AppConstants.fontFamily,
-            fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -92,7 +93,7 @@ class HomeScreen extends ConsumerWidget {
             GridBlock(),
             LastBlock(),
             const SizedBox(
-              height: 20,
+              height: 16,
             ),
           ],
         ),

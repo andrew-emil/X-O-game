@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 
@@ -34,9 +33,6 @@ class _GameScreenState extends State<GameScreen> {
     void nextMove() {
       setState(() {
         if (index < moves.length - 1) index++;
-        log(blockIndex.toString());
-        log(currentPlayer);
-        log(moves[index]);
       });
     }
 

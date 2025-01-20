@@ -111,7 +111,7 @@ class HistoryScreen extends ConsumerWidget {
                           ref.read(historyProvider.notifier).timeAgo(game.date),
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey.shade700,
+                            color: Colors.grey.shade800,
                           ),
                         ),
                       ],
