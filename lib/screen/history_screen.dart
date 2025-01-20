@@ -86,7 +86,7 @@ class HistoryScreen extends ConsumerWidget {
                     leading: CircleAvatar(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       child: Text(
-                        game.winner.substring(0, 1),
+                        game.winner == '' ? '' : game.winner.substring(0, 1),
                         style: TextStyle(
                           color: Theme.of(context).textTheme.bodyLarge!.color,
                           fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class HistoryScreen extends ConsumerWidget {
                       ),
                     ),
                     title: Text(
-                      'Winner: ${game.winner}',
+                      game.winner == '' ? 'Draw' : 'Winner: ${game.winner}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

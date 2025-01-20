@@ -108,7 +108,7 @@ class GridBlock extends ConsumerWidget {
     // Check if the game is over
     if (game.turns >= 4) {
       String winner = ref.checkWinner();
-      if (winner == 'X' || winner == 'O' || game.turns == 9) {
+      if (winner == 'X' || winner == 'O' || game.turns >= 8) {
         ref.setGameOver = true;
         int index = max(game.playerO.length, game.playerX.length);
         List<String> moves = [];
@@ -120,7 +120,9 @@ class GridBlock extends ConsumerWidget {
             moves.add('O${game.playerO[i]}');
           }
         }
-        moves.add('$winner$lastMoveIndex');
+        winner == ''
+            ? moves.add('X$lastMoveIndex')
+            : moves.add('$winner$lastMoveIndex');
 
         final gameHistory = HistoryState(
           winner: winner,

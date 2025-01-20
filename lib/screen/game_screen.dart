@@ -21,7 +21,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     List<String> moves = widget.gameHistoryState.moves;
-    int blockIndex = int.parse(moves[index][1]) + 1;
+    int blockIndex = int.parse(moves[index][1]);
     String currentPlayer = moves[index][0];
 
     void previousMove() {
