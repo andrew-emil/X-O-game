@@ -63,7 +63,7 @@ class HomeScreen extends ConsumerWidget {
           children: [
             SwitchListTile.adaptive(
               title: Text(
-                'Turn on/off Two Players',
+                'Play with AI',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,

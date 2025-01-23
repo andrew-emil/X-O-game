@@ -59,7 +59,7 @@ class LastBlock extends ConsumerWidget {
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
             backgroundColor: theme.splashColor,
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(14),
           ),
         ),
       ],

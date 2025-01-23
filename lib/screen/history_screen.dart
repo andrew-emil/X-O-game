@@ -10,8 +10,9 @@ class HistoryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<HistoryState> historyList = ref.watch(historyProvider);
-    final notifier = ref.watch(historyProvider.notifier);
+    final List<HistoryState> historyList =
+        ref.watch(historyProvider).reversed.toList();
+
     return Scaffold(
       appBar: AppBar(
         elevation: Theme.of(context).appBarTheme.elevation,
@@ -28,9 +29,16 @@ class HistoryScreen extends ConsumerWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () async {
-              await notifier.clearHistory();
-            },
+            onPressed: historyList.isEmpty
+                ? null
+                : () => _showDialog(
+                      context,
+                      ref,
+                      null,
+                      'Delete History',
+                      'Are you sure you want to delete the history?',
+                      false,
+                    ),
             icon: Icon(
               Icons.delete,
               color: Colors.red,
@@ -138,42 +146,14 @@ class HistoryScreen extends ConsumerWidget {
                             Icons.delete,
                             color: Theme.of(context).colorScheme.secondary,
                           ),
-                          onPressed: () {
-                            // Confirm deletion
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Text("Delete Game"),
-                                content: const Text(
-                                  "Are you sure you want to delete this game?",
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text(
-                                      "Cancel",
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .tertiary),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      ref
-                                          .read(historyProvider.notifier)
-                                          .removeGame(index);
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text(
-                                      "Delete",
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                          onPressed: () => _showDialog(
+                            context,
+                            ref,
+                            index,
+                            'Delete Game',
+                            'Are you sure you want to delete this game?',
+                            true,
+                          ),
                         ),
                       ],
                     ),
@@ -181,6 +161,41 @@ class HistoryScreen extends ConsumerWidget {
                 );
               },
             ),
+    );
+  }
+
+  Future<dynamic> _showDialog(BuildContext context, WidgetRef ref, int? index,
+      String title, String content, bool isOneGame) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(
+          content,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              "Cancel",
+              style: TextStyle(color: Theme.of(context).colorScheme.onTertiary),
+            ),
+          ),
+          TextButton(
+            onPressed: () async {
+              isOneGame && index != null
+                  ? ref.read(historyProvider.notifier).removeGame(index)
+                  : await ref.watch(historyProvider.notifier).clearHistory();
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
+            },
+            child: const Text(
+              "Delete",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

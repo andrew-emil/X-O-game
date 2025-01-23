@@ -16,7 +16,7 @@ class AppTheme {
     ),
     colorScheme: ColorScheme.light(
       primary: const Color.fromARGB(255, 181, 198, 252), // Light blue
-      surface: const Color(0x1A0DB8F7), // Very light blue
+      surface: const Color.fromARGB(26, 10, 185, 248), // Very light blue
       shadow: const Color(0xFF4C72EE), // Blue shadow
       secondary: Colors.redAccent,
       tertiary: Colors.blue[900],
@@ -47,7 +47,7 @@ class AppTheme {
     ),
     colorScheme: ColorScheme.dark(
       primary: const Color(0xFF001456), // Dark blue
-      surface: const Color(0xFF121212), // Same for consistency
+      surface: Colors.grey.shade900,
       shadow: const Color.fromARGB(255, 2, 49, 201), // Matches primary
       secondary: Colors.red[900]!,
       tertiary: Colors.indigo[900],
