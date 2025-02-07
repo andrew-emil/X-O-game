@@ -38,6 +38,7 @@ class GameState {
       activePlayer: activePlayer ?? this.activePlayer,
       turns: turns ?? this.turns,
       gameOver: gameOver ?? this.gameOver,
+      
     );
   }
 

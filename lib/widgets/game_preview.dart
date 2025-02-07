@@ -28,32 +28,29 @@ class GamePreview extends StatelessWidget {
               );
           final symbol = move.isNotEmpty ? move[0] : '';
 
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 500),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.shadow,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Center(
-                child: Text(
-                  symbol,
-                  style: TextStyle(
-                    fontSize: 52,
-                    fontFamily: AppConstants.fontFamily,
-                    fontWeight: FontWeight.bold,
-                    color: symbol == 'X'
-                        ? Theme.of(context).colorScheme.tertiary
-                        : Theme.of(context).colorScheme.secondary,
+          return LayoutBuilder(
+            builder: (context, constraints) => AnimatedContainer(
+                duration: Duration(milliseconds: 500),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.shadow,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    symbol,
+                    style: TextStyle(
+                      fontSize: constraints.maxWidth * 0.5,
+                      fontFamily: AppConstants.fontFamily,
+                      fontWeight: FontWeight.bold,
+                      color: symbol == 'X'
+                          ? Theme.of(context).colorScheme.tertiary
+                          : Theme.of(context).colorScheme.secondary,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
-            ),
-          );
+            );
         },
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'constants/app_theme.dart';
@@ -9,8 +8,6 @@ import 'screen/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
     const ProviderScope(
@@ -27,7 +24,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeState = ref.watch(themeProvider);
     return MaterialApp(
-      title: 'XO game',
+      title: 'XO Champ',
       debugShowCheckedModeBanner: false,
       theme: themeState == ThemeEnum.light
           ? AppTheme.lightTheme

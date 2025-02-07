@@ -35,7 +35,7 @@ class AppTheme {
   // Dark Theme
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
     appBarTheme: AppBarTheme(
-      backgroundColor: const Color(0xFF121212), // Dark background
+      backgroundColor: Colors.blueGrey[900], // Dark background
       foregroundColor: Colors.white,
       elevation: 2,
       titleTextStyle: TextStyle(
@@ -55,7 +55,7 @@ class AppTheme {
       onPrimary: Colors.white,
       onSurface: Colors.white70,
     ),
-    scaffoldBackgroundColor: const Color(0xFF121212), // Dark background
+    scaffoldBackgroundColor:const Color(0xFF121212),
     cardTheme: CardTheme(
       color: const Color(0xFF1E1E1E), // Slightly lighter than background
       shadowColor: const Color(0xFF001456).withValues(alpha: .2),

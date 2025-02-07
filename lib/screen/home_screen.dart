@@ -58,46 +58,114 @@ class HomeScreen extends ConsumerWidget {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SwitchListTile.adaptive(
-              title: Text(
-                'Play with AI',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: AppConstants.fontFamily,
+        child: Center(
+          child: MediaQuery.of(context).size.width > 600
+              ? Row(
+                  children: [
+                    ..._largeScreenLayout(
+                        context, isSwitchOn, gameOver, ref, activePlayer),
+                  ],
+                )
+              : Column(
+                  children: [
+                    ..._smallScreenLayout(
+                        context, isSwitchOn, gameOver, ref, activePlayer),
+                  ],
                 ),
-              ),
-              activeColor: Theme.of(context).colorScheme.onSurface,
-              hoverColor: null,
-              value: isSwitchOn,
-              onChanged: gameOver
-                  ? null
-                  : (newVal) {
-                      ref.watch(isSwitchedOnProvider.notifier).toggleSwitch();
-                    },
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              gameOver ? '' : 'It\'s $activePlayer turn',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 22,
-                fontFamily: AppConstants.fontFamily,
-              ),
-            ),
-            GridBlock(),
-            LastBlock(),
-            const SizedBox(
-              height: 16,
-            ),
-          ],
         ),
       ),
     );
   }
+
+  List<Widget> _smallScreenLayout(BuildContext context, bool isSwitchOn,
+          bool gameOver, WidgetRef ref, String activePlayer) =>
+      [
+        SwitchListTile.adaptive(
+          title: Text(
+            'Play with AI',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontFamily: AppConstants.fontFamily,
+            ),
+          ),
+          activeColor: Theme.of(context).colorScheme.onSurface,
+          hoverColor: null,
+          value: isSwitchOn,
+          onChanged: gameOver
+              ? null
+              : (newVal) {
+                  ref.watch(isSwitchedOnProvider.notifier).toggleSwitch();
+                },
+        ),
+        const SizedBox(height: 8),
+        Text(
+          gameOver ? '' : 'It\'s $activePlayer turn',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 22,
+            fontFamily: AppConstants.fontFamily,
+          ),
+        ),
+        Expanded(
+          child: AspectRatio(
+            aspectRatio: 1.0, // 1:1 aspect ratio (square)
+            child: GridBlock(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        LastBlock(),
+        const SizedBox(height: 16),
+      ];
+
+  List<Widget> _largeScreenLayout(BuildContext context, bool isSwitchOn,
+          bool gameOver, WidgetRef ref, String activePlayer) =>
+      [
+        Expanded(
+          child: Column(
+            children: [
+              SwitchListTile.adaptive(
+                title: Text(
+                  'Play with AI',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: AppConstants.fontFamily,
+                  ),
+                ),
+                activeColor: Theme.of(context).colorScheme.onSurface,
+                hoverColor: null,
+                value: isSwitchOn,
+                onChanged: gameOver
+                    ? null
+                    : (newVal) {
+                        ref.watch(isSwitchedOnProvider.notifier).toggleSwitch();
+                      },
+              ),
+              const SizedBox(height: 8),
+              LastBlock(),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Column(
+            children: [
+              Text(
+                gameOver ? '' : 'It\'s $activePlayer turn',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontFamily: AppConstants.fontFamily,
+                ),
+              ),
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: GridBlock(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ];
 }

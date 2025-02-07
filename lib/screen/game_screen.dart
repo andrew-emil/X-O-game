@@ -43,7 +43,9 @@ class _GameScreenState extends State<GameScreen> {
         foregroundColor: Theme.of(context).appBarTheme.foregroundColor,
         centerTitle: true,
         title: Text(
-          'Game',
+          widget.gameHistoryState.winner == ''
+              ? 'Draw'
+              : '${widget.gameHistoryState.winner} is the Winner',
           style: TextStyle(
             fontSize: 20,
             fontFamily: AppConstants.fontFamily,
@@ -52,64 +54,118 @@ class _GameScreenState extends State<GameScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 16),
-            Text(
-              '${widget.gameHistoryState.winner} is the Winner',
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: AppConstants.fontFamily,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: GamePreview(
-                gameMoves: moves,
-                gameIndex: index,
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              'Player $currentPlayer plays in block $blockIndex',
-              style: TextStyle(
-                fontFamily: AppConstants.fontFamily,
-                fontSize: 24,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: index <= 0 ? null : previousMove,
-                  icon: Platform.isIOS
-                      ? Icon(Icons.arrow_back_ios_new)
-                      : Icon(Icons.arrow_back),
-                  color: Theme.of(context).colorScheme.shadow,
+        child: MediaQuery.of(context).size.width > 600
+            ? Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 8),
+                        _screenLayout(
+                          moves,
+                          currentPlayer,
+                          blockIndex,
+                          previousMove,
+                          context,
+                          nextMove,
+                        )[1],
+                        const SizedBox(height: 8),
+                        _screenLayout(
+                          moves,
+                          currentPlayer,
+                          blockIndex,
+                          previousMove,
+                          context,
+                          nextMove,
+                        )[5],
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 8),
+                        Expanded(
+                          child: GamePreview(
+                            gameMoves: moves,
+                            gameIndex: index,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                    ),
+                  )
+                ],
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: _screenLayout(
+                  moves,
+                  currentPlayer,
+                  blockIndex,
+                  previousMove,
+                  context,
+                  nextMove,
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
-                IconButton(
-                  onPressed: index >= moves.length - 1 ? null : nextMove,
-                  icon: Platform.isIOS
-                      ? Icon(Icons.arrow_forward_ios)
-                      : Icon(Icons.arrow_forward),
-                  color: Theme.of(context).colorScheme.shadow,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
+              ),
       ),
     );
   }
+
+  List<Widget> _screenLayout(
+          List<String> moves,
+          String currentPlayer,
+          int blockIndex,
+          void Function() previousMove,
+          BuildContext context,
+          void Function() nextMove) =>
+      [
+        const SizedBox(height: 16),
+        Text(
+          'Player $currentPlayer plays in block $blockIndex',
+          style: TextStyle(
+            fontFamily: AppConstants.fontFamily,
+            fontSize: 24,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 16),
+        Expanded(
+          child: GamePreview(
+            gameMoves: moves,
+            gameIndex: index,
+          ),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: index <= 0 ? null : previousMove,
+              icon: Platform.isIOS
+                  ? Icon(Icons.arrow_back_ios_new)
+                  : Icon(Icons.arrow_back),
+              color: Theme.of(context).colorScheme.shadow,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            IconButton(
+              onPressed: index >= moves.length - 1 ? null : nextMove,
+              icon: Platform.isIOS
+                  ? Icon(Icons.arrow_forward_ios)
+                  : Icon(Icons.arrow_forward),
+              color: Theme.of(context).colorScheme.shadow,
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+      ];
 }

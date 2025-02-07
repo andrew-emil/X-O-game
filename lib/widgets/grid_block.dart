@@ -25,8 +25,9 @@ class GridBlock extends ConsumerWidget {
     // Listen to game state changes
     ref.listen<GameState>(gameProvider, (previous, next) {
       if (_shouldTriggerAI(next, previous, switchNotifier)) {
+        final Duration duration = Duration(milliseconds: 100);
         // If it's AI's turn, make a move
-        Future.delayed(Duration.zero, () {
+        Future.delayed(duration, () {
           int aiIndex = gameRef.getBestMove();
           gameRef.playGame(aiIndex, next.activePlayer);
           _updateGameState(next, gameRef, historyNotifier, aiIndex);
@@ -34,16 +35,16 @@ class GridBlock extends ConsumerWidget {
       }
     });
 
-    return Expanded(
-      child: GridView.count(
-        crossAxisCount: 3,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8.0,
-        childAspectRatio: 1.0,
-        padding: const EdgeInsets.all(8),
-        children: List.generate(
-          9,
-          (index) => GestureDetector(
+    return GridView.count(
+      crossAxisCount: 3,
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 8.0,
+      childAspectRatio: 1.0,
+      padding: const EdgeInsets.all(8),
+      children: List.generate(
+        9,
+        (index) => LayoutBuilder(
+          builder: (context, constraints) => GestureDetector(
             onTap: game.gameOver
                 ? null
                 : () => _handleClick(
@@ -64,7 +65,7 @@ class GridBlock extends ConsumerWidget {
                           ? 'O'
                           : '',
                   style: TextStyle(
-                    fontSize: 52,
+                    fontSize: constraints.maxWidth * 0.5,
                     fontFamily: AppConstants.fontFamily,
                     fontWeight: FontWeight.bold,
                     color: game.playerX.contains(index)

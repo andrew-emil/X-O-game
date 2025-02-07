@@ -5,6 +5,12 @@ class MinmaxAlgorithm {
 
   MinmaxAlgorithm({required this.originBoard});
 
+  bool checkWin(List<String> board, List<int> combination, String player) {
+    return board[combination[0]] == player &&
+        board[combination[1]] == player &&
+        board[combination[2]] == player;
+  }
+
   List<int> emptySpots(List<String> board) {
     List<int> availableSpots = [];
     for (int i = 0; i < board.length; i++) {
